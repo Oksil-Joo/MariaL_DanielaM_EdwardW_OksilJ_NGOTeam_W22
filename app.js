@@ -1,25 +1,21 @@
 import express from 'express';
+import router from './routes/index.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+console.log(__dirname);
+
+const  app = express();
 const port = process.env.PORT || 3000;
 
-// this is the equivalent of index.html
-app.get('/', (req, res) => {
-    res.send('hello from express! Express is awesome!');
-})
+app.use(express.static(path.join(__dirname, "public")));
 
-app.get('/maria', (req, res) => {
-    res.send(`this is maria's`);
-})
+app.use('/', router);
 
-app.get('/daniela', (req, res) => {
-    res.send(`this is daniela's`);
-})
-
-app.get('/edward', (req, res) => {
-    res.send(`this is edward's`);
-})
 
 app.listen(port, () => {
-  console.log(`Server running at port: ${port}/`);
+  console.log(`App is running at ${port}/`);
 });
